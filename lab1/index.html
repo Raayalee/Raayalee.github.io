@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackathonHub — Віртуальні хакатони</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header>
+    <h1>HackathonHub</h1>
+    <nav>
+      <ul>
+        <li><a href="#contests">Змагання</a></li>
+        <li><a href="#projects">Мої проєкти</a></li>
+        <li><a href="#rating">Рейтинг</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="contests">
+      <h2>Змагання</h2>
+      <p>Активні та майбутні хакатони з правилами, дедлайнами та темами.</p>
+
+      <!-- Тут будуть картки хакатонів (пізніше зробимо CSS Grid) -->
+      <div class="hackathons">
+
+        <article class="card">
+          <h3>AI Sprint Hackathon</h3>
+          <p><strong>Тема:</strong> ШІ в освіті</p>
+          <p><strong>Дедлайн:</strong> 20 березня</p>
+          <p>Створи прототип інструмента, який допомагає студентам навчатись ефективніше.</p>
+          <button type="button">Детальніше</button>
+        </article>
+
+        <article class="card">
+          <h3>Web Dev Challenge</h3>
+          <p><strong>Тема:</strong> Адаптивний UI</p>
+          <p><strong>Дедлайн:</strong> 2 квітня</p>
+          <p>Зроби адаптивний інтерфейс для сервісу змагань та представ його як лендінг.</p>
+          <button type="button">Детальніше</button>
+        </article>
+
+        <article class="card">
+          <h3>DataQuest Cup</h3>
+          <p><strong>Тема:</strong> Аналіз даних</p>
+          <p><strong>Дедлайн:</strong> 15 квітня</p>
+          <p>Побудуй просту аналітику/дашборд за відкритим набором даних.</p>
+          <button type="button">Детальніше</button>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Мої проєкти</h2>
+      <p>Тут ти можеш створювати та керувати своїми заявками.</p>
+
+      <ul>
+        <li><strong>EduBot</strong> — статус: в процесі</li>
+        <li><strong>Responsive Arena</strong> — статус: подано</li>
+        <li><strong>City Data Insights</strong> — статус: завершено</li>
+      </ul>
+    </section>
+
+    <section id="rating">
+      <h2>Рейтинг</h2>
+      <p>Лідерборд учасників за перемогами та балами активності.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Учасник</th>
+            <th>Перемоги</th>
+            <th>Бали</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ірина</td>
+            <td>5</td>
+            <td>920</td>
+          </tr>
+          <tr>
+            <td>Олег</td>
+            <td>3</td>
+            <td>740</td>
+          </tr>
+          <tr>
+            <td>Марія</td>
+            <td>2</td>
+            <td>610</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Контакти:</strong> support@hackathonhub.example</p>
+    <p>© 2026 HackathonHub</p>
+  </footer>
+
+</body>
+</html>
