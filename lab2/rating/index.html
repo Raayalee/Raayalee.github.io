@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HackathonHub — Рейтинг</title>
+  <link rel="icon" href="../images/favicon_64x64.png">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="../images/logo_for_hackathonHUB.png" alt="HackathonHub Logo">
+        <span>HackathonHub</span>
+      </div>
+      <nav>
+        <ul class="nav-list">
+          <li><a href="../index.html" data-page="home">Головна</a></li>
+          <li><a href="../competitions/index.html" data-page="competitions">Змагання</a></li>
+          <li><a href="../projects/index.html" data-page="projects">Мої проєкти</a></li>
+          <li><a href="./index.html" data-page="rating">Рейтинг</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p id="nav-hint" class="nav-hint">Наведи курсор на пункт меню, щоб побачити короткий опис сторінки.</p>
+  </header>
+
+  <main>
+    <section>
+      <h1>Рейтинг</h1>
+      <div class="rating-intro">
+        <p>У цій таблиці зібрані найактивніші учасники нашої спільноти: люди, які стабільно показують якісний результат, працюють у командах та підтримують високий темп розвитку проєктів у хакатонах.</p>
+      </div>
+
+      <div class="rating-controls">
+        <button id="toggle-rating-btn" class="btn-secondary" type="button">Приховати рейтинг</button>
+      </div>
+
+      <div id="rating-table-wrap" class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Учасник</th>
+              <th>Перемоги</th>
+              <th>Бали</th>
+            </tr>
+          </thead>
+          <tbody id="rating-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Контакти:</strong> support@hackathonhub</p>
+    <p>© 2026 HackathonHub</p>
+  </footer>
+
+  <script src="../assets/js/app-data.js"></script>
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/rating.js"></script>
+</body>
+</html>

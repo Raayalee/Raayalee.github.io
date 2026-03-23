@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HackathonHub — Мої проєкти</title>
+  <link rel="icon" href="../images/favicon_64x64.png">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="../images/logo_for_hackathonHUB.png" alt="HackathonHub Logo">
+        <span>HackathonHub</span>
+      </div>
+      <nav>
+        <ul class="nav-list">
+          <li><a href="../index.html" data-page="home">Головна</a></li>
+          <li><a href="../competitions/index.html" data-page="competitions">Змагання</a></li>
+          <li><a href="./index.html" data-page="projects">Мої проєкти</a></li>
+          <li><a href="../rating/index.html" data-page="rating">Рейтинг</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p id="nav-hint" class="nav-hint">Наведи курсор на пункт меню, щоб побачити короткий опис сторінки.</p>
+  </header>
+
+  <main>
+    <section>
+      <h1>Мої проєкти</h1>
+      <p>Статус ваших робіт і поданих заявок.</p>
+
+      <div class="project-list">
+        <article class="project-card">
+          <div class="project-top">
+            <h3>Educational Intelligence</h3>
+            <span class="status status-progress">Завершено</span>
+          </div>
+          <p>AI-помічник для навчання та автоматизації відповідей студентам. Поточний етап: підготовка до подання заявки.</p>
+        </article>
+
+        <article class="project-card">
+          <div class="project-top">
+            <h3>Uni Club</h3>
+            <span class="status status-submitted">Завершено</span>
+          </div>
+          <p>Адаптивний інтерфейс платформи змагань із сучасною навігацією та мобільною версією.</p>
+        </article>
+
+        <article class="project-card">
+          <div class="project-top">
+            <h3>City Data Insights</h3>
+            <span class="status status-done">Завершено</span>
+          </div>
+          <p>Аналітичний сервіс для візуалізації відкритих міських даних і створення міні-дашбордів.</p>
+        </article>
+      </div>
+
+      <h2>Подані заявки</h2>
+      <div id="submitted-projects" class="submitted-grid"></div>
+    </section>
+
+    <section class="application-panel">
+      <h2>Подати нову заявку</h2>
+      <p>Форма синхронізується з “Змаганнями”. Після подання картка з'явиться в блоці “Подані заявки”.</p>
+
+      <form id="application-form" novalidate>
+        <div class="form-grid">
+          <label class="field">
+            <span>Ім'я</span>
+            <input id="app-name" name="name" type="text" autocomplete="name" placeholder="Введіть ім'я" required>
+          </label>
+
+          <label class="field">
+            <span>Email</span>
+            <input id="app-email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+          </label>
+
+          <label class="field">
+            <span>Хакатон</span>
+            <select id="app-hackathon" name="hackathon" required></select>
+          </label>
+
+          <label class="field">
+            <span>Назва проєкту</span>
+            <input id="app-project" name="project" type="text" placeholder="Назва вашого проєкту" required>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Короткий опис ідеї</span>
+          <textarea id="app-idea" name="idea" rows="4" placeholder="Опишіть ідею в 2-4 реченнях" required></textarea>
+        </label>
+
+        <div class="form-row">
+          <button id="import-json-btn" class="btn-secondary" type="button">Імпортувати файл</button>
+          <input id="app-file" type="file" accept=".json,.txt" hidden>
+          <span class="import-label">Підтримка: .json, .txt (формат key=value)</span>
+        </div>
+
+        <pre id="json-preview" class="json-preview">JSON-preview: файл не імпортовано</pre>
+
+        <div class="form-row">
+          <button class="btn-primary" type="submit">Подати заявку</button>
+          <p id="application-message" class="form-message" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Контакти:</strong> support@hackathonhub</p>
+    <p>© 2026 HackathonHub</p>
+  </footer>
+
+  <script src="../assets/js/app-data.js"></script>
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/form.js"></script>
+  <script src="../assets/js/projects.js"></script>
+</body>
+</html>

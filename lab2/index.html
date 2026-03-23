@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HackathonHub — Головна</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="icon" href="images/favicon_64x64.png">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="images/logo_for_hackathonHUB.png" alt="HackathonHub Logo">
+        <span>HackathonHub</span>
+      </div>
+
+      <nav>
+        <ul class="nav-list">
+          <li><a href="index.html" data-page="home">Головна</a></li>
+          <li><a href="competitions/index.html" data-page="competitions">Змагання</a></li>
+          <li><a href="projects/index.html" data-page="projects">Мої проєкти</a></li>
+          <li><a href="rating/index.html" data-page="rating">Рейтинг</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p id="nav-hint" class="nav-hint">Наведи курсор на пункт меню, щоб побачити короткий опис сторінки.</p>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h1>Віртуальна платформа для хакатонів нового покоління</h1>
+        <p>HackathonHub об'єднує учасників, менторів і журі в єдиній екосистемі: від ідеї до демо-пітчу. Ми робимо участь у хакатонах простою, прозорою і максимально практичною.</p>
+        <div class="form-row">
+          <a class="btn btn-primary" href="competitions/index.html">Перейти до змагань</a>
+          <a class="btn btn-secondary" href="projects/index.html">Мої проєкти</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Чому обирають наші хакатони</h2>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Прозорі правила</h3>
+          <p>Кожне змагання має чіткі критерії оцінювання, таймінг і зрозумілий формат захисту.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Практичні кейси</h3>
+          <p>Завдання орієнтовані на реальні сценарії з освіти, вебу, аналітики та продуктової розробки.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Підтримка команди</h3>
+          <p>Ментори й журі надають зворотний зв'язок, щоб ти міг швидко покращувати рішення.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Постійне журі</h2>
+      <div class="jury-grid">
+        <article class="jury-card">
+          <img src="images/jury-1.jpg" alt="Член журі 1" onerror="this.src='images/anechka.jpg'">
+          <h3>Скрипник Анна</h3>
+          <p class="jury-role">Lead Front-end Engineer</p>
+        </article>
+        <article class="jury-card">
+          <img src="images/jury-2.jpg" alt="Член журі 2" onerror="this.src='images/olga.jpg'">
+          <h3>Бабій Ольга</h3>
+          <p class="jury-role">Product & UX Mentor</p>
+        </article>
+        <article class="jury-card">
+          <img src="images/jury-3.jpg" alt="Член журі 3" onerror="this.src='images/yarichek.jpg'">
+          <h3>Ярослав Басараб</h3>
+          <p class="jury-role">Data Science Reviewer</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>FAQ</h2>
+      <div class="faq-grid">
+        <article class="faq-item">
+          <h3>Чи можна брати участь без команди?</h3>
+          <p>Так, можна. На старті кожного хакатону доступний етап формування команд за навичками.</p>
+        </article>
+        <article class="faq-item">
+          <h3>Які технології дозволені?</h3>
+          <p>Дозволено будь-який стек, якщо ти можеш обґрунтувати вибір і показати робочий прототип.</p>
+        </article>
+        <article class="faq-item">
+          <h3>Як оцінюють проєкти?</h3>
+          <p>Основні критерії: цінність ідеї, технічна реалізація, UX, якість презентації та масштабованість.</p>
+        </article>
+        <article class="faq-item">
+          <h3>Коли публікуються результати?</h3>
+          <p>Результати публікуються в день захисту на сторінці рейтингу після верифікації балів журі.</p>
+        </article>
+      </div>
+
+      <div class="form-row" style="margin-top: 16px;">
+        <a class="btn btn-primary" href="competitions/index.html">Переглянути хакатони</a>
+        <a class="btn btn-secondary" href="rating/index.html">Відкрити рейтинг</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><strong>Контакти:</strong> support@hackathonhub</p>
+    <p>© 2026 HackathonHub</p>
+  </footer>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/home.js"></script>
+</body>
+</html>
