@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ApplicationForm from '../components/ApplicationForm';
-import { hackathons } from '../data/appData';
+import useAppData from '../hooks/useAppData';
 
 export default function Projects() {
 
@@ -10,6 +10,9 @@ export default function Projects() {
     const saved = JSON.parse(localStorage.getItem('applications') || '[]');
     setApplications(saved);
   };
+
+  const { data, loading, error } = useAppData();
+  const hackathons = data?.hackathons || [];
 
   useEffect(() => {
     loadApplications();
@@ -31,6 +34,24 @@ export default function Projects() {
       hour: "2-digit", minute: "2-digit"
     });
   };
+
+  if (loading) return (
+    <main>
+      <section>
+        <h1>Мої проєкти</h1>
+        <p>Завантаження даних...</p>
+      </section>
+    </main>
+  );
+
+  if (error) return (
+    <main>
+      <section>
+        <h1>Мої проєкти</h1>
+        <p>Помилка завантаження даних: {error.message}</p>
+      </section>
+    </main>
+  );
 
   return (
     <main>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { participants } from '../data/appData';
+import useAppData from '../hooks/useAppData';
 
 export default function Rating() {
   const [isVisible, setIsVisible] = useState(true);
+  const { data, loading, error } = useAppData();
+  const participants = data?.participants || [];
 
   return (
     <main>
@@ -28,6 +30,11 @@ export default function Rating() {
         </div>
 
         {isVisible && (
+          loading ? (
+            <p>Завантаження даних...</p>
+          ) : error ? (
+            <p>Помилка завантаження: {error.message}</p>
+          ) : (
           <div id="rating-table-wrap" className="table-wrap">
             <table>
               <thead>
@@ -50,10 +57,11 @@ export default function Rating() {
                       <td>{participant.points}</td>
                     </tr>
                   );
-                })}
+                  })}
               </tbody>
             </table>
           </div>
+            )
         )}
       </section>
     </main>

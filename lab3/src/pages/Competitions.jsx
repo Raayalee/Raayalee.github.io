@@ -3,20 +3,41 @@ import ApplicationForm from '../components/ApplicationForm';
 import HackathonCard from '../components/HackathonCard';
 import ParticipantsList from '../components/ParticipantsList';
 import ResultsList from '../components/ResultsList';
-import { hackathons } from '../data/appData';
+import useAppData from '../hooks/useAppData';
 
 export default function Competitions() {
 
   const [selectedCategory, setSelectedCategory] = useState('Всі');
   const [selectedHackathon, setSelectedHackathon] = useState(null);
 
+  const { data, loading, error } = useAppData();
+  const hackathons = data?.hackathons || [];
+
   const categories = ['Всі', ...new Set(hackathons.map(h => h.category))];
 
-  const filteredHackathons = selectedCategory === 'Всі' 
-    ? hackathons 
+  const filteredHackathons = selectedCategory === 'Всі'
+    ? hackathons
     : hackathons.filter(h => h.category === selectedCategory);
 
   const closeModal = () => setSelectedHackathon(null);
+
+  if (loading) return (
+    <main>
+      <section>
+        <h1>Доступні змагання</h1>
+        <p>Завантаження даних...</p>
+      </section>
+    </main>
+  );
+
+  if (error) return (
+    <main>
+      <section>
+        <h1>Доступні змагання</h1>
+        <p>Помилка завантаження даних: {error.message}</p>
+      </section>
+    </main>
+  );
 
   return (
     <main>
