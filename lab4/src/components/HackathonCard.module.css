@@ -1,0 +1,20 @@
+.card {
+  border: 1px solid #e1e6ee;
+  padding: 12px;
+  border-radius: 8px;
+  background: white;
+}
+.header {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.category {
+  background:#eef6ff;
+  color:#0b4a6f;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:0.85rem;
+}
+.meta { color:#666; font-size:0.9rem; margin:6px 0 }
+.description { margin:8px 0 }
