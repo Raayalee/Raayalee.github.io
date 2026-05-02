@@ -1,6 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { createApplication } from '../firebase';
+import { useAuth } from '../context/AuthContext';
 
 export default function ApplicationForm({ hackathons, onSuccess }) {
+  const { user } = useAuth();
+  const accountEmail = user?.email || '';
 
   const [formData, setFormData] = useState({
     name: '',
@@ -15,11 +19,34 @@ export default function ApplicationForm({ hackathons, onSuccess }) {
   
   const fileInputRef = useRef(null);
 
+  useEffect(() => {
+    if (!accountEmail) return;
+
+    setFormData((prev) => ({
+      ...prev,
+      email: prev.email || accountEmail,
+    }));
+  }, [accountEmail]);
+
+  const normalizeFirestoreError = (error) => {
+    const code = error?.code || '';
+
+    const map = {
+      'permission-denied': 'Немає доступу до Firestore. Перевірте firestore.rules і чи задеплоєні вони.',
+      'unauthenticated': 'Потрібно увійти в акаунт ще раз і повторити подання заявки.',
+      'failed-precondition': 'Для цього запиту у Firestore потрібен індекс або інша конфігурація.',
+      'invalid-argument': 'Дані заявки мають некоректний формат.',
+      'network-request-failed': 'Мережевий збій. Перевірте інтернет і повторіть спробу.',
+    };
+
+    return map[code] || `${code || 'firestore-error'}: ${error?.message || 'Не вдалося зберегти заявку.'}`;
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!formData.name || !formData.email || !formData.hackathon || !formData.project || !formData.idea) {
@@ -27,21 +54,46 @@ export default function ApplicationForm({ hackathons, onSuccess }) {
       return;
     }
 
+    if (!user?.uid || !accountEmail) {
+      setMessage('❌ Для подання заявки потрібно увійти в акаунт.');
+      return;
+    }
+
+    const normalizedEmail = accountEmail.trim();
+
     const newApplication = {
-      ...formData,
-      id: Date.now().toString(),
-      createdAt: new Date().toISOString()
+      name: formData.name,
+      email: normalizedEmail,
+      hackathon: formData.hackathon,
+      project: formData.project,
+      idea: formData.idea,
     };
 
-    const existingApps = JSON.parse(localStorage.getItem('applications') || '[]');
-    existingApps.push(newApplication);
-    localStorage.setItem('applications', JSON.stringify(existingApps));
+    try {
+      const applicationId = await createApplication(newApplication, user);
+      const submittedApplication = {
+        id: applicationId,
+        ...newApplication,
+        uid: user.uid,
+        userEmail: normalizedEmail,
+        createdAt: new Date().toISOString(),
+      };
 
-    setMessage('✅ Заявку успішно подано!');
-    setFormData({ name: '', email: '', hackathon: '', project: '', idea: '' });
-    setJsonPreview('JSON-preview: файл не імпортовано');
+      setMessage('✅ Заявку успішно подано!');
+      setFormData({
+        name: '',
+        email: user.email || '',
+        hackathon: '',
+        project: '',
+        idea: '',
+      });
+      setJsonPreview('JSON-preview: файл не імпортовано');
 
-    if (onSuccess) onSuccess();
+      if (onSuccess) onSuccess(submittedApplication);
+    } catch (error) {
+      console.error('Create application failed:', error);
+      setMessage(`❌ ${normalizeFirestoreError(error)}`);
+    }
   };
 
   const handleImportClick = () => {
@@ -81,7 +133,15 @@ export default function ApplicationForm({ hackathons, onSuccess }) {
 
         <label className="field">
           <span>Email</span>
-          <input name="email" value={formData.email} onChange={handleChange} type="email" placeholder="name@example.com" required />
+          <input
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            type="email"
+              placeholder={accountEmail || 'name@example.com'}
+            required
+              readOnly={Boolean(accountEmail)}
+          />
         </label>
 
         <label className="field">

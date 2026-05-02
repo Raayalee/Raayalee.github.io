@@ -43,8 +43,12 @@ header {
 .header-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
+}
+
+.header-container nav {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .logo {
@@ -66,7 +70,24 @@ header {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
+}
+
+.header-auth {
+  flex: 0 0 220px;
+  min-width: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.header-auth-status {
+  font-size: 13px;
+  color: #b8c8e6;
+  white-space: nowrap;
+  text-align: right;
 }
 
 .nav-list a {
@@ -151,6 +172,13 @@ button:hover,
 
 .btn-secondary:hover {
   background: #dde8ff;
+}
+
+.auth-action {
+  min-width: 108px;
+  height: 40px;
+  padding: 0 14px;
+  line-height: 1;
 }
 
 .btn-danger {
@@ -457,6 +485,31 @@ footer {
 }
 
 @media (max-width: 760px) {
+  .header-container {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .header-container nav {
+    order: 3;
+    flex: 1 0 100%;
+  }
+
+  .header-auth {
+    order: 2;
+    flex: 0 0 auto;
+    min-width: 0;
+    margin-left: auto;
+  }
+
+  .header-auth-status {
+    display: inline-block;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .faq-grid {
     grid-template-columns: 1fr;
   }
@@ -473,8 +526,18 @@ footer {
 }
 
 @media (max-width: 480px) {
+  .header-auth {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .header-auth-status {
+    max-width: 140px;
+  }
+
   .nav-list {
     flex-direction: column;
+    justify-content: flex-start;
   }
 
   .nav-list a {

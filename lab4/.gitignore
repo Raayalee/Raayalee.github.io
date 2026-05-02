@@ -2,3 +2,5 @@ node_modules
 build
 dist
 .env
+serviceAccountKey.json
+*-firebase-adminsdk-*.json

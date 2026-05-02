@@ -1,11 +1,30 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { logoutUser } from '../firebase';
+import { useAuth } from '../context/AuthContext';
 
 export default function Header() {
+  const navigate = useNavigate();
+  const { isAuthenticated, isAuthReady } = useAuth();
 
   const defaultHint = "Наведи курсор на пункт меню, щоб побачити короткий опис сторінки.";
   
   const [hint, setHint] = useState(defaultHint);
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      navigate('/');
+    } catch {
+      setHint('Не вдалося вийти з акаунта. Спробуйте ще раз.');
+    }
+  };
+
+  const authStatus = !isAuthReady
+    ? 'Перевірка статусу...'
+    : isAuthenticated
+      ? 'Авторизовано'
+      : 'Гість';
 
   return (
     <header>
@@ -55,6 +74,20 @@ export default function Header() {
             </li>
           </ul>
         </nav>
+
+        <div className="header-auth">
+          <span className="header-auth-status">{authStatus}</span>
+
+          {isAuthenticated ? (
+            <button type="button" className="btn btn-secondary auth-action" onClick={handleLogout}>
+              Вийти
+            </button>
+          ) : (
+            <NavLink to="/auth" className="btn btn-secondary auth-action">
+              Увійти
+            </NavLink>
+          )}
+        </div>
       </div>
       
       <p id="nav-hint" className="nav-hint">{hint}</p>

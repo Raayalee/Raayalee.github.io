@@ -1,28 +1,76 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ApplicationForm from '../components/ApplicationForm';
 import useAppData from '../hooks/useAppData';
+import { deleteApplicationById, getUserApplications } from '../firebase';
+import { useAuth } from '../context/AuthContext';
 
 export default function Projects() {
+  const { user } = useAuth();
 
   const [applications, setApplications] = useState([]);
+  const [applicationsLoading, setApplicationsLoading] = useState(true);
+  const [applicationsError, setApplicationsError] = useState('');
 
-  const loadApplications = () => {
-    const saved = JSON.parse(localStorage.getItem('applications') || '[]');
-    setApplications(saved);
+  const normalizeReadError = (error) => {
+    const code = error?.code || '';
+
+    const map = {
+      'permission-denied': 'Немає доступу до списку заявок у Firestore. Перевірте firestore.rules і deploy.',
+      'failed-precondition': 'Для запиту заявок у Firestore потрібен composite index.',
+      'unauthenticated': 'Потрібно увійти в акаунт повторно, щоб отримати заявки.',
+      'network-request-failed': 'Мережевий збій під час завантаження заявок.',
+      'aborted': 'Запит заявок було перервано. Спробуйте ще раз.',
+    };
+
+    return map[code] || `${code || 'firestore-error'}: ${error?.message || 'Не вдалося завантажити заявки з Firestore.'}`;
   };
+
+  const loadApplications = useCallback(async (optimisticApplication = null) => {
+    if (!user?.uid) {
+      setApplications([]);
+      setApplicationsLoading(false);
+      return;
+    }
+
+    setApplicationsLoading(true);
+    setApplicationsError('');
+
+    try {
+      const fetchedApplications = await getUserApplications(user.uid);
+      if (optimisticApplication) {
+        const filtered = fetchedApplications.filter((app) => app.id !== optimisticApplication.id);
+        setApplications([optimisticApplication, ...filtered]);
+      } else {
+        setApplications(fetchedApplications);
+      }
+    } catch (error) {
+      setApplicationsError(normalizeReadError(error));
+      if (optimisticApplication) {
+        setApplications((prev) => {
+          const exists = prev.some((app) => app.id === optimisticApplication.id);
+          return exists ? prev : [optimisticApplication, ...prev];
+        });
+      }
+    } finally {
+      setApplicationsLoading(false);
+    }
+  }, [user?.uid]);
 
   const { data, loading, error } = useAppData();
   const hackathons = data?.hackathons || [];
 
   useEffect(() => {
     loadApplications();
-  }, []);
+  }, [loadApplications]);
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm("Видалити цю заявку без можливості відновлення?")) {
-      const updatedApps = applications.filter(app => app.id !== id);
-      localStorage.setItem('applications', JSON.stringify(updatedApps));
-      setApplications(updatedApps); 
+      try {
+        await deleteApplicationById(id);
+        setApplications((prev) => prev.filter((app) => app.id !== id));
+      } catch {
+        setApplicationsError('Не вдалося видалити заявку.');
+      }
     }
   };
 
@@ -86,8 +134,11 @@ export default function Projects() {
         </div>
 
         <h2>Подані заявки</h2>
+        {applicationsError ? <p>{applicationsError}</p> : null}
         <div id="submitted-projects" className="submitted-grid">
-          {applications.length === 0 ? (
+          {applicationsLoading ? (
+            <p>Завантаження заявок...</p>
+          ) : applications.length === 0 ? (
             <p>Поки що немає поданих заявок.</p>
           ) : (
             applications.map((app) => (
