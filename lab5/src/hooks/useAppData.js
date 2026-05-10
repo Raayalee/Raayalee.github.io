@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { getAppDataFromFirestore } from '../firebase';
-import { hackathons as localHackathons, participants as localParticipants } from '../data/appData';
+import { useState, useEffect, useCallback } from "react";
+import { apiRequest } from "../api/client";
+import { hackathons as localHackathons, participants as localParticipants } from "../data/appData";
 
 export default function useAppData() {
   const [data, setData] = useState(null);
@@ -12,8 +12,8 @@ export default function useAppData() {
     setError(null);
     try {
       try {
-        const firestoreData = await getAppDataFromFirestore();
-        setData(firestoreData);
+        const apiData = await apiRequest("/api/public-data");
+        setData(apiData);
       } catch {
         const base = process.env.PUBLIC_URL ?? '';
         const dataPaths = [

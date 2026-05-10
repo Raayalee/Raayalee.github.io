@@ -6,6 +6,8 @@ const morgan = require("morgan");
 
 const authRoutes = require("./routes/auth");
 const applicationsRoutes = require("./routes/applications");
+const publicDataRoutes = require("./routes/publicData");
+const { connectToDatabase } = require("./db");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -50,7 +52,19 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/applications", applicationsRoutes);
+app.use("/api/public-data", publicDataRoutes);
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+const startServer = async () => {
+  try {
+    await connectToDatabase();
+
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
